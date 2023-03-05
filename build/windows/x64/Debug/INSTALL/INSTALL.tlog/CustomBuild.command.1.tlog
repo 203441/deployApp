@@ -1,0 +1,10 @@
+^C:\USERS\JBMAL\DOCUMENTS\FLUTTERCODES\ALL4MY\BUILD\WINDOWS\CMAKEFILES\3FC3196C6527B4966B195283FFB3BAB0\INSTALL_FORCE.RULE
+setlocal
+cd .
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

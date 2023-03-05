@@ -1,0 +1,10 @@
+^C:\USERS\JBMAL\DOCUMENTS\FLUTTERCODES\ALL4MY\BUILD\WINDOWS\CMAKEFILES\3FC3196C6527B4966B195283FFB3BAB0\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/jbmal/Documents/flutterCodes/all4my/windows -BC:/Users/jbmal/Documents/flutterCodes/all4my/build/windows --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/jbmal/Documents/flutterCodes/all4my/build/windows/all4my.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
