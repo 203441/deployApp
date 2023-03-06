@@ -19,6 +19,13 @@ class Menu extends StatelessWidget {
                   textAlign: TextAlign.end,
                 ),
               ),
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     await FacebookAuth.instance.logOut();
+              //     // aquí puedes agregar código adicional para redirigir al usuario o actualizar la interfaz gráfica
+              //   },
+              //     child: Text("Cerrar sesión"),
+              //   ),
             ],
           ),
         ),

@@ -1,28 +1,23 @@
+import 'package:all4my/main.dart';
+import 'package:all4my/pages/home.dart';
 import 'package:all4my/pages/login_m.dart';
-import 'package:all4my/pages/menu_principal.dart';
-import 'package:all4my/pages/recover_pass.dart';
-import 'package:flutter/material.dart';
-import 'register_button.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:all4my/pages/register_form.dart';
-
-final GoogleSignIn _googleSignIn = GoogleSignIn();
-GoogleSignInAccount? _currentUser;
-
-
-
-// import 'package:all4my/pages/login.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'register_button.dart';
 
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+
+class LoginUwu extends StatelessWidget {
+  const LoginUwu({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -34,18 +29,36 @@ class Login extends StatelessWidget {
                 height: 220,
               ),
               const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    // signInWithGoogle();
-                  },
-                  child: Text('Iniciar sesión con Google'),
-                  
+
+              // continuar con google
+              RegisterButton(
+                text: 'Continuar con Google',
+                onTapCallback: () async {
+                  await signInWithGoogle();
+                  // ignore: use_build_context_synchronously
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeW()),
+                  );
+                },
+                color: const Color(0xFF4068EC),
+                color_cont: const Color(0xFF4068EC),
+                colorText: Colors.white,
+                img_icon: Image.asset(
+                  'assets/images/google.png',
+                  width: 20,
+                  height: 20,
                 ),
+              ),
 
               const SizedBox(height: 20),
-              ElevatedButton.icon(
-              onPressed: () async {
-                final LoginResult result = await FacebookAuth.instance.login();
+
+              // boton de registrarse con facebook
+
+              RegisterButton(
+                text: 'Continuar con Facebook',
+                onTapCallback: () async {
+                  final LoginResult result = await FacebookAuth.instance.login();
                 if (result.status == LoginStatus.success) {
                   // La autenticación con Facebook fue exitosa, puedes obtener el token de acceso y otros datos de usuario aquí
                 } else {
@@ -53,22 +66,32 @@ class Login extends StatelessWidget {
                 }
                 Navigator.push(
                   context, 
-                  MaterialPageRoute(builder: (context) => const Menu())
+                  MaterialPageRoute(builder: (context) => const HomeW())
                 );
-              },
-              icon: const Icon(Icons.facebook),
-              label: const Text('Acceder con Facebook'),
-            ),
+                },
+                color: const Color(0xFF384F9F),
+                color_cont: const Color(0xFF384F9F),
+                colorText: Colors.white,
+                img_icon: Image.asset(
+                  'assets/images/facebook.png',
+                  width: 20,
+                  height: 20,
+                ),
+              ),
+              
+              
 
               const SizedBox(height: 20),
+
+              // boton de registrarse con correo electronico
               RegisterButton(
                 text: 'Registrarse con e-mail',
                 onTapCallback: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const RegisterDt(),
-                    ),
+                        builder: (context) => RegisterDt() // RegisterForm()
+                        ),
                   );
                 },
                 color: Colors.white,
@@ -80,10 +103,11 @@ class Login extends StatelessWidget {
                   height: 20,
                 ),
               ),
+
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment:MainAxisAlignment.center,
-                children: [TextButton(
+
+              // texto de entrar como invitado
+              TextButton(
                 onPressed: () {},
                 child: const Text(
                   'Entrar como invitado',
@@ -93,6 +117,7 @@ class Login extends StatelessWidget {
                   ),
                 ),
               ),
+              // texto de entrar como vendedor
               TextButton(
                 onPressed: () {},
                 child: const Text(
@@ -102,8 +127,9 @@ class Login extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-              ),],
               ),
+
+              // texto de ya tienes cuenta?
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -129,29 +155,52 @@ class Login extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
                 ],
               ),
-              TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const RecoverPass()),
-                      );
-                    },
-                    child: const Text(
-                      'Recuperar contraseña',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 100, 65, 225),
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
             ],
           ),
         ),
       ),
     );
   }
-  
+}
+
+Future<UserCredential> signInWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+  // Once signed in, return the UserCredential
+  return await FirebaseAuth.instance.signInWithCredential(credential);
+}
+
+// eliminar el usuario de la base de datos
+Future<void> deleteUser() async {
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  if (user != null) {
+    if (user.providerData.isEmpty) {
+      await user.delete();
+    } else {
+      user.delete();
+    }
+  }
+}
+
+// registrar usuario con correo y contraseña
+Future<void> registerUser() async {
+  final User? user = FirebaseAuth.instance.currentUser;
+
+  if (user != null && !user.emailVerified) {
+    await user.sendEmailVerification();
+  }
 }

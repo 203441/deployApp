@@ -1,5 +1,7 @@
 import 'package:all4my/pages/login_m.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Register extends StatelessWidget {
   const Register({super.key});
@@ -116,3 +118,4 @@ class Register extends StatelessWidget {
     );
   }
 }
+

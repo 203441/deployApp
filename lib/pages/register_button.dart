@@ -8,14 +8,15 @@ class RegisterButton extends StatelessWidget {
   final Image img_icon;
   final Color color_cont;
 
-  const RegisterButton(
-      {super.key,
-      required this.text,
-      required this.onTapCallback,
-      required this.color,
-      required this.colorText,
-      required this.img_icon,
-      required this.color_cont});
+  const RegisterButton({
+    super.key,
+    required this.text,
+    required this.onTapCallback,
+    required this.color,
+    required this.colorText,
+    required this.img_icon,
+    required this.color_cont}
+  );
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "com.example.all4my",
+  "applicationId": "com.example.app_auth",
   "variantName": "debug",
   "elements": [
     {

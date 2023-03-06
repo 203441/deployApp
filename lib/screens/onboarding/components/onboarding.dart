@@ -1,3 +1,4 @@
+import 'package:all4my/pages/login_m.dart';
 import 'package:flutter/material.dart';
 import 'package:all4my/pages/login.dart';
 import 'package:all4my/screens/onboarding/components/content_boarding.dart';
@@ -66,7 +67,7 @@ class _OnboardingState extends State<Onboarding> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Login()),
+                MaterialPageRoute(builder: (context) => const LoginUwu()),
               );
             },
           ),
@@ -116,7 +117,7 @@ class _OnboardingState extends State<Onboarding> {
                 ? ElevatedButton(onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Login())
+                    MaterialPageRoute(builder: (context) => const LoginUwu())
                   );
                 }, style: ElevatedButton.styleFrom(
                   side: const BorderSide(
