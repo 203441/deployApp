@@ -29,11 +29,11 @@ class LoginM extends StatelessWidget {
               )
             ),
            const  Padding(
-               padding:  EdgeInsets.only(top:10,bottom: 30),
-               child:  TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Usuario'),
-                ),
+              padding:  EdgeInsets.only(top:10,bottom: 30),
+              child:  TextField(
+                decoration: InputDecoration(
+                  hintText: 'Usuario'),
+              ),
              ),
            const Padding(
               padding: EdgeInsets.only(bottom: 30),
